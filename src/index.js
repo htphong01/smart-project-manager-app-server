@@ -21,8 +21,8 @@ const attenders = {
 
 
 io.on("connection", (socket) => {
-
-  socket.on('joinRoom', data => {
+  
+  socket.on('joinSocket', data => {
     const { userId } = data;
     attenders[userId] = socket.id;
     socket.join(userId);
@@ -41,6 +41,11 @@ io.on("connection", (socket) => {
   socket.on('rejectCall', ({ to }) => {
     const socketId = attenders[to];
     io.to(socketId).emit('rejectCall', to);
+  })
+
+  socket.on('acceptCall', ({ to }) => {
+    const socketId = attenders[to];
+    io.to(socketId).emit('acceptCall', to);
   })
 
   socket.on('disconnect', () => {
