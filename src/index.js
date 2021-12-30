@@ -29,6 +29,7 @@ io.on("connection", (socket) => {
   })
 
   socket.on('calling', ({ from, to }) => {
+    console.log('calling');
     const socketId = attenders[to];
     io.to(socketId).emit('calling', from);
   });
@@ -46,6 +47,26 @@ io.on("connection", (socket) => {
   socket.on('acceptCall', ({ to }) => {
     const socketId = attenders[to];
     io.to(socketId).emit('acceptCall', to);
+  })
+
+  socket.on('endCall', ({ to }) => {
+    const socketId = attenders[to];
+    io.to(socketId).emit('endCall', to);
+  })
+
+  socket.on('onOffCamera', ({ to, status }) => {
+    const socketId = attenders[to];
+    io.to(socketId).emit('onOffCamera', status);
+  });
+  
+  socket.on('turnOnCamera', ({ to, desc }) => {
+    const socketId = attenders[to];
+    io.to(socketId).emit('turnOnCamera', desc);
+  });
+
+  socket.on('turnOffMicro', ({to}) => {
+    const socketId = attenders[to];
+    io.to(socketId).emit('turnOffMicro', to);
   })
 
   socket.on('disconnect', () => {
