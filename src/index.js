@@ -29,7 +29,6 @@ io.on("connection", (socket) => {
   })
 
   socket.on('calling', ({ from, to }) => {
-    console.log('calling');
     const socketId = attenders[to];
     io.to(socketId).emit('calling', from);
   });
@@ -74,16 +73,19 @@ io.on("connection", (socket) => {
   })
 
   socket.on('offer', ({ to, desc }) => {
+    console.log('offer: ', to , desc);
     const socketId = attenders[to];
     io.to(socketId).emit('offer', desc);
   });
 
   socket.on('answer', ({ to, desc }) => {
+    console.log('answer', desc)
     const socketId = attenders[to];
     io.to(socketId).emit('answer', desc);
   })
 
   socket.on('candidate', ({ to, candidate }) => {
+    console.log('candidate', candidate)
     const socketId = attenders[to];
     io.to(socketId).emit('candidate', candidate);
   })
