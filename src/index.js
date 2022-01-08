@@ -21,14 +21,18 @@ const attenders = {
 
 
 io.on("connection", (socket) => {
+
+  console.log('new connection', socket.id);
   
   socket.on('joinSocket', data => {
     const { userId } = data;
     attenders[userId] = socket.id;
     socket.join(userId);
+    console.log(attenders);
   })
 
   socket.on('calling', ({ from, to }) => {
+    console.log('calling', from, to);
     const socketId = attenders[to];
     io.to(socketId).emit('calling', from);
   });
